@@ -92,3 +92,8 @@ ENV/
 
 # PyCharm project setting
 .idea
+
+# models
+usage/models/20180402-114759/*.*
+usage/models/20180408-102900/*.*
+usage/models/*.zip
