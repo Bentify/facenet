@@ -31,11 +31,11 @@ This "usage" folder demonstrates step-by-step guidelines on how to setup real-ti
 	   test\person1\person1_01.jpg
 	   test\person1\person1_02.jpg
 	   ...
-	   test\person1\person1_XX.jpg
+	   test\person1\person1_WW.jpg
 	   test\person2\person2_01.jpg
 	   test\person2\person2_02.jpg
 	   ...
-	   test\person2\person2_YY.jpg
+	   test\person2\person2_ZZ.jpg
 	2. Execute test.bat
 	   ::python ../src/classifier.py CLASSIFY datasets\test models\20180408-102900\20180408-102900.pb models\datasets_classifier.pkl
 	   python ../src/classifier.py CLASSIFY datasets\test models\20180402-114759\20180402-114759.pb models\datasets_classifier.pkl
