@@ -1,4 +1,4 @@
-# FaceNet Usage
+# FaceNet Usage Guidelines
 
 This "usage" folder demonstrates step-by-step guidelines on how to setup real-time facial recognition with a webcam using the FaceNet framework by David Sandberg. https://github.com/davidsandberg/facenet
 
