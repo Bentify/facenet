@@ -24,8 +24,8 @@ This "usage" folder demonstrates step-by-step guidelines on how to setup real-ti
 	   ...
 	   train\person2\person2_YY.jpg
 	2. Execute train.bat
-	   ::python ../src/classifier.py TRAIN datasets\train models\20180408-102900\20180408-102900.pb models\datasets_classifier.pkl --batch_size 1000
-	   python ../src/classifier.py TRAIN datasets\train models\20180402-114759\20180402-114759.pb models\datasets_classifier.pkl --batch_size 1000
+	   ::python classifier.py TRAIN datasets\train models\20180408-102900\20180408-102900.pb models\datasets_classifier.pkl --batch_size 1000
+	   python classifier.py TRAIN datasets\train models\20180402-114759\20180402-114759.pb models\datasets_classifier.pkl --batch_size 1000
 
 ### Testing:
 
@@ -39,8 +39,8 @@ This "usage" folder demonstrates step-by-step guidelines on how to setup real-ti
 	   ...
 	   test\person2\person2_ZZ.jpg
 	2. Execute test.bat
-	   ::python ../src/classifier.py CLASSIFY datasets\test models\20180408-102900\20180408-102900.pb models\datasets_classifier.pkl
-	   python ../src/classifier.py CLASSIFY datasets\test models\20180402-114759\20180402-114759.pb models\datasets_classifier.pkl
+	   ::python classifier.py CLASSIFY datasets\test models\20180408-102900\20180408-102900.pb models\datasets_classifier.pkl
+	   python classifier.py CLASSIFY datasets\test models\20180402-114759\20180402-114759.pb models\datasets_classifier.pkl
 
 ### Testing w/a webcam:
 	1. Connect a webcam
