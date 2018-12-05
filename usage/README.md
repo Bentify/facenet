@@ -6,7 +6,9 @@ This "usage" folder demonstrates step-by-step guidelines on how to setup real-ti
 
 	1. Install PIP package dependencies
 	   Go to facenet directory and run "pip install -r requirements.txt"
-	2. Download the models, unzip and put inside facenet\usage\models
+	2. Install facenet 
+	   python setup.py install
+	3. Download the models, unzip and put inside facenet\usage\models
 	   https://drive.google.com/open?id=1EXPBSXwTaqrSC0OhUdXNmKSh9qJUQ55-
 	   https://drive.google.com/open?id=1R77HmFADxe87GmoLwzfgMu_HY0IhcyBz
 
