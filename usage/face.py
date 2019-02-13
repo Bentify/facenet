@@ -9,9 +9,8 @@ from scipy import misc
 import facenet.src.align.detect_face as align_detect_face
 import facenet.src.facenet as facenet
 
-
 gpu_memory_fraction = 0.3
-debug = False
+debug = True
 
 
 class Face:
@@ -48,7 +47,16 @@ class Recognition:
             face.name = self.identifier.identify(face)
 
         return faces
-
+    
+    def recon_faces(self, image):
+        faces = self.detect.find_faces(image)
+        for i, face in enumerate(faces):
+            if debug:
+                cv2.imshow("Face: " + str(i), face.image)
+            face.embedding = self.encoder.generate_embedding(face)
+            
+        return faces
+    
 
 class Identifier:
     def __init__(self, classifier_model):
@@ -59,6 +67,7 @@ class Identifier:
     def identify(self, face):
         if face.embedding is not None:
             predictions = self.model.predict_proba([face.embedding])
+            print('predictions: %s' % predictions)
             best_class_indices = np.argmax(predictions, axis=1)
             return self.class_names[best_class_indices[0]]
 

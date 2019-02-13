@@ -1,15 +1,18 @@
 import argparse
 import sys
 import time
-
 import cv2
 import os
 import face
 import datetime
-
+from facedb import FaceDB
 
 
 window_name = "Real_Time_Facial_Recognition"
+
+face_embd_size = 512
+
+fdb = FaceDB(face_embd_size, 'faces', 'idx')
 
 def add_overlays(frame, faces, frame_rate):
     if faces is not None:
@@ -17,11 +20,14 @@ def add_overlays(frame, faces, frame_rate):
             face_bb = face.bounding_box.astype(int)
             cv2.rectangle(frame,
                           (face_bb[0], face_bb[1]), (face_bb[2], face_bb[3]),
-                          (0, 255, 0), 2)
-            if face.name is not None:
-                cv2.putText(frame, face.name, (face_bb[0], face_bb[3]),
-                            cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0),
-                            thickness=2, lineType=2)
+                          (0, 255, 0), 1)
+            user_id, _ = fdb.upsert_face(face)
+            if user_id is not None:
+                cv2.putText(frame, user_id, (face_bb[0], face_bb[3] + 20), cv2.FONT_HERSHEY_DUPLEX, 0.5, (100, 250, 230),
+                            thickness=1, lineType=2)
+            #print(frame.shape, face.image.shape, face.embedding.shape)
+                                
+        #sys.stdin.readline()
 
     cv2.putText(frame, str(frame_rate) + " fps", (10, 30),
                 cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0),
@@ -38,25 +44,33 @@ def main(args):
     if args.debug:
         print("Debug enabled")
         face.debug = True
-
+    #camUrl ="http://157.242.44.67/mjpg/video.mjpg"
+    #camUrl ="http://157.242.44.62/mjpg/video.mjpg"
     video_capture = cv2.VideoCapture(0)
+    #video_capture = cv2.VideoCapture(camUrl)
     video_capture.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
     video_capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
     video_capture.set(cv2.CAP_PROP_FPS, 30)
+    ##video_capture.set(cv2.CAP_PROP_FPS, 30)
 
     facenet_model_checkpoint = os.path.dirname(__file__) + args.model
     classifier_model = os.path.dirname(__file__) + args.classifier
     face_recognition = face.Recognition(facenet_model_checkpoint, classifier_model, min_face_size=20)
     start_time = time.time()
-
+    retried_frames=0
     while True:
         # Capture frame-by-frame
         ret, frame = video_capture.read()
+        
         if ret == 0:
-            print("Error: check if webcam is connected.")
-            return
-
-        faces = face_recognition.identify(frame)
+            retried_frames += 1
+            ret, frame = video_capture.read()
+            if retried_frames > 30:
+                print("Error: check if webcam is connected.")
+                return
+        retried_frames=0
+        #faces = face_recognition.identify(frame)
+        faces = face_recognition.recon_faces(frame)
 
         if (frame_count % frame_interval) == 0:
             # Check our current fps

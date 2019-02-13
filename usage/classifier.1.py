@@ -34,8 +34,10 @@ import os
 import sys
 import math
 import pickle
-from sklearn.svm import SVC
-from sklearn.naive_bayes import GaussianNB
+#from sklearn.svm import SVC
+#from sklearn.naive_bayes import GaussianNB
+from xgboost import XGBClassifier
+
 
 def main(args):
   
@@ -93,8 +95,9 @@ def main(args):
             if (args.mode=='TRAIN'):
                 # Train classifier
                 print('Training classifier')
-                #model = GaussianNB()
-                model = SVC(kernel='linear', probability=True)
+                ##model = GaussianNB()
+                ##model = SVC(kernel='linear', probability=True)
+                model = XGBClassifier()
                 model.fit(emb_array, labels)
             
                 # Create a list of class names
